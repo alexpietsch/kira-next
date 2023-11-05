@@ -1,0 +1,13 @@
+{
+	"semi": false,
+	"printWidth": 130,
+	"tabWidth": 4,
+	"useTabs": true,
+	"trailingComma": "none",
+	"bracketSpacing": true,
+	"jsxBracketSameLine": false,
+	"arrowParens": "avoid",
+	"proseWrap": "preserve",
+	"endOfLine": "lf",
+	"plugins": ["@trivago/prettier-plugin-sort-imports"]
+}

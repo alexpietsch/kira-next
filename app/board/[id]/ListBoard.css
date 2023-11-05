@@ -1,0 +1,66 @@
+.list-container {
+	display: flex;
+	margin-bottom: 100px;
+}
+.list-container ul {
+	list-style: none;
+}
+
+.taskColumn {
+	margin: 10px;
+	width: 350px;
+	min-width: 200px;
+}
+
+.taskCard {
+	padding: 1em;
+	border: 3px solid #575757;
+	border-radius: 4px;
+	background-color: #fff;
+	margin-bottom: 0.5em;
+	word-wrap: break-word;
+	max-width: 500px;
+	position: relative;
+}
+
+.taskCard p {
+	margin: 0;
+}
+
+.taskCard .deleteButton {
+	position: absolute;
+	top: 0;
+	right: 0;
+	cursor: pointer;
+	margin-top: 0em;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+
+.is-expired {
+	border-color: #f00;
+}
+
+.labelWrapper {
+	display: flex;
+	flex-flow: row wrap;
+	flex-grow: 0;
+}
+
+.label {
+	background-color: #fff;
+	padding: 0.3em;
+	margin: 0.2em 0.3em 0.5em 0.1em;
+	border-radius: 5px;
+	font-size: 0.7em;
+	font-weight: normal;
+	color: #fff;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 85px;
+}
+
+.column {
+	padding: 1em;
+}

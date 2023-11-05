@@ -1,0 +1,59 @@
+.nav-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #343a40;
+	width: 100%;
+	height: 80px;
+	padding: 20px 30px;
+	box-sizing: border-box;
+	color: #fff;
+}
+
+.page-title-wrapper a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 1.6em;
+	font-weight: 600;
+}
+
+.nav-elements {
+	height: 100%;
+	list-style: none;
+	display: flex;
+	align-items: center;
+}
+
+.nav-elements * {
+	display: inline-block;
+}
+
+.buttonLink {
+	border: 1px solid #fff;
+	padding: 5px;
+	width: 60px;
+}
+.buttonLink a {
+	color: #fff;
+	text-decoration: none;
+}
+.buttonLink:last-child {
+	margin-left: 16px;
+}
+
+.logoutButton {
+	background: none;
+	border: none;
+	color: #fff;
+	font-size: 1.5em;
+}
+.logoutButton:hover {
+	cursor: pointer;
+}
+
+.logo {
+	height: auto;
+	width: 20px;
+	margin-right: 5px;
+	padding-top: 5px;
+}
