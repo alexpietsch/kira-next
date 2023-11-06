@@ -1,4 +1,4 @@
-.nav-container {
+.navContainer {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -10,21 +10,21 @@
 	color: #fff;
 }
 
-.page-title-wrapper a {
+.pageTitleWrapper a {
 	color: #fff;
 	text-decoration: none;
 	font-size: 1.6em;
 	font-weight: 600;
 }
 
-.nav-elements {
+.navElements {
 	height: 100%;
 	list-style: none;
 	display: flex;
 	align-items: center;
 }
 
-.nav-elements * {
+.navElements * {
 	display: inline-block;
 }
 

@@ -1,10 +1,11 @@
 // hooks
 import { useFirestore } from "../_hooks/useFirestore"
 // styles
-import "./BoardEdit.css"
+import styles from "./BoardEdit.module.css"
 // components
 import ConfirmModal from "./ConfirmModal"
 import { Column, KiraDocument } from "@/types/KiraDocument"
+import { DragDropContext, Draggable, DropResult, Droppable } from "@hello-pangea/dnd"
 // mui components
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -17,7 +18,6 @@ import Divider from "@mui/material/Divider"
 import TextField from "@mui/material/TextField"
 import { useRouter } from "next/navigation"
 import React, { Dispatch, SetStateAction, useState } from "react"
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
 interface IBoardEditProps {
 	boardData: KiraDocument
@@ -70,7 +70,7 @@ export default function BoardEdit({ boardData, setBoardData, isBoardEditOpen, se
 		// updateDocument(boardData.boardID, {columns: newState.columns})
 	}
 
-	function handleDragEnd(result: any) {
+	function handleDragEnd(result: DropResult) {
 		let newColumnOrder = boardData
 		const { source, destination } = result
 		// check if the card is dropped outside the area
@@ -141,7 +141,7 @@ export default function BoardEdit({ boardData, setBoardData, isBoardEditOpen, se
 						<DragDropContext onDragEnd={handleDragEnd}>
 							<Droppable droppableId="droppable" direction="horizontal">
 								{provided => (
-									<div className="BoardEdit_container">
+									<div className={styles.BoardEdit_container}>
 										<ul
 											{...provided.droppableProps}
 											ref={provided.innerRef}
@@ -152,8 +152,8 @@ export default function BoardEdit({ boardData, setBoardData, isBoardEditOpen, se
 													return (
 														<Draggable
 															key={column.columnID}
-															draggableId={column.columnID}
 															index={index}
+															draggableId={column.columnID}
 															isDragDisabled={isEdit.state}
 														>
 															{provided => (
@@ -161,7 +161,7 @@ export default function BoardEdit({ boardData, setBoardData, isBoardEditOpen, se
 																	ref={provided.innerRef}
 																	{...provided.draggableProps}
 																	{...provided.dragHandleProps}
-																	className="BoardEdit_column"
+																	className={styles.BoardEdit_column}
 																>
 																	{column.columnName}
 																</li>

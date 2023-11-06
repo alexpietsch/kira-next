@@ -16,7 +16,6 @@ import React, { useState } from "react"
 function UserProfile() {
 	const { state } = useAuthContext()
 	const user = state.user!
-	console.log(user)
 
 	const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
 	const [isSnackBarOpen, setIsSnackBarOpen] = useState(false)

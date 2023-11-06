@@ -1,0 +1,23 @@
+.labelPreview {
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #333;
+}
+
+.formInput {
+	width: 100%;
+}
+
+.label {
+	background-color: #fff;
+	padding: 0.3em;
+	margin: 0.2em 0.3em 0.5em 0.1em;
+	border-radius: 5px;
+	font-size: 0.7em;
+	font-weight: normal;
+	color: #fff;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 85px;
+}

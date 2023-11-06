@@ -11,14 +11,15 @@
 	"dependencies": {
 		"@emotion/react": "^11.11.1",
 		"@emotion/styled": "^11.11.0",
+		"@hello-pangea/dnd": "^16.3.0",
 		"@mui/icons-material": "^5.14.16",
 		"@mui/material": "^5.14.16",
 		"@mui/x-date-pickers": "^6.18.0",
+		"clsx": "^2.0.0",
 		"date-fns": "^2.30.0",
 		"firebase": "^10.5.2",
 		"next": "14.0.1",
 		"react": "^18",
-		"react-beautiful-dnd": "^13.1.1",
 		"react-color": "^2.19.3",
 		"react-dom": "^18",
 		"uuid": "^9.0.1"
@@ -27,14 +28,11 @@
 		"@trivago/prettier-plugin-sort-imports": "^4.2.1",
 		"@types/node": "^20",
 		"@types/react": "^18",
-		"@types/react-beautiful-dnd": "^13.1.6",
 		"@types/react-color": "^3.0.9",
 		"@types/react-dom": "^18",
 		"@types/uuid": "^9.0.6",
 		"eslint": "^8",
 		"eslint-config-next": "14.0.1",
-		"i": "^0.3.7",
-		"npm": "^10.2.3",
 		"prettier": "^3.0.3",
 		"typescript": "^5"
 	}

@@ -17,12 +17,36 @@
 	margin-top: 0.5em;
 }
 
+.label {
+	background-color: #fff;
+	padding: 0.3em;
+	margin: 0.2em 0.3em 0.5em 0.1em;
+	border-radius: 5px;
+	font-size: 0.7em;
+	font-weight: normal;
+	color: #fff;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 85px;
+}
+
 .label .deleteButton {
 	cursor: pointer;
 	margin-top: 0em;
 }
 
-.label-delete:hover {
+.labelDelete:hover {
 	cursor: url("data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZFJREFUSEu1ldFZwzAMhH83XYEdeGAHwhDpCrBF2y1ghXSIlB14YAdWoA2fZJEoidO48FUvTRXHp9Od5cCNI9x4f3IASmCbKmQN+284XirSAazLFd+P5xVwtk/6552W0lq+f97FjP9IE+8YsGdQBmjiHn63YX36JvF6lHpKAgDN/zVRqFkAKX5LG0rtxzyREc9AoBVmR1r2VqRqkxK5AQPIadeQsmwq1XcxBQg0wkAr6tdtgHrUPpczBlHYqwFkowNQCYh2rWDDyXKB2rlLWrQAoEL7FvELIAQEREIAKaA6KbOBBjkMkMPlRfYghlFUcKpHRshoUbRqBPDRt8WYhNqc4w9GLkBSZG2LC9Uk/r9GZNPAuWhWA9XEi5zlImuRGwkRoKDi1Fm1d9bfXITMJXOfPi2cg84PuRokRJ471X76xVGRcw48gHFJjOvJZM0CWPHMmdeJTSeJzjme2wvw5pemht0DhAO09ymQ9L2jKz/tpH8sAcj7O1ssv4Po767BLfZl40N+B5FzJy9368KKmwP8APrMmBlyya2iAAAAAElFTkSuQmCC"),
 		auto;
+}
+
+.labelPreview {
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #333;
+}
+
+.formInput {
+	width: 100%;
 }

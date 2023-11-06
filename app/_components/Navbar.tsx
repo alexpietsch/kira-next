@@ -1,17 +1,17 @@
 "use client"
 
-// styles
-import { useAuthContext } from "../_hooks/useAuthContext"
 // hooks
+import { useAuthContext } from "../_hooks/useAuthContext"
 import { useLogout } from "../_hooks/useLogout"
-import "./Navbar.css"
+// styles
+import styles from "./Navbar.module.css"
 // icons & images
 import Logo from "@/public/assets/logo.svg"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import LogoutIcon from "@mui/icons-material/Logout"
 // material ui
 import { IconButton, Button, Avatar, Menu, MenuItem, ListItemIcon } from "@mui/material"
-// rest
+// next & react
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -34,14 +34,14 @@ export default function Navbar() {
 	}
 
 	return (
-		<nav className="nav-container">
-			<div className="page-title-wrapper">
-				<Image src={Logo} alt="Logo" className="logo" />
+		<nav className={styles.navContainer}>
+			<div className={styles.pageTitleWrapper}>
+				<Image src={Logo} alt="Logo" className={styles.logo} />
 				<Link href="/">Kira</Link>
 			</div>
 
 			{!user && (
-				<ul className="nav-elements">
+				<ul className={styles.navElements}>
 					<li>
 						<Button variant="contained" onClick={() => push("/login")}>
 							Login
@@ -55,7 +55,7 @@ export default function Navbar() {
 				</ul>
 			)}
 			{user && (
-				<ul className="nav-elements">
+				<ul className={styles.navElements}>
 					<li>Logged in as {user.displayName}</li>
 					<li style={{ marginLeft: "8px" }}>
 						<IconButton onClick={handleAvatarClick}>

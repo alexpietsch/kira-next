@@ -62,7 +62,7 @@ The app is mostly finished. All currently implemented features work and the app 
     ```
 3. Run the App locally
     ```sh
-    npm start
+    npm run dev
     ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

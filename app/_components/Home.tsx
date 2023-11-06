@@ -11,7 +11,7 @@ export default function Home() {
 	const { state } = useAuthContext()
 	const { user } = state
 
-	const { documents, error } = useCollection<KiraDocument>({ collectionName: "tasks", _user: user })
+	const { documents, error } = useCollection<KiraDocument>({ collectionName: process.env.NEXT_PUBLIC_COLLECTION, _user: user })
 
 	return (
 		<>

@@ -14,6 +14,8 @@ import { useAuthContext } from "@/app/_hooks/useAuthContext"
 import { useCollection } from "@/app/_hooks/useCollection"
 import { useFirestore } from "@/app/_hooks/useFirestore"
 import { Card, Column, KiraDocument } from "@/types/KiraDocument"
+// packages
+import { DragDropContext, Droppable, Draggable, DraggableLocation, DropResult } from "@hello-pangea/dnd"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 // icons
@@ -28,8 +30,6 @@ import TextField from "@mui/material/TextField"
 import { DocumentData } from "firebase/firestore"
 import { useRouter } from "next/navigation"
 import React, { useState, useEffect } from "react"
-// packages
-import { DragDropContext, Droppable, Draggable, DraggableLocation, DropResult } from "react-beautiful-dnd"
 import { v4 as uuidv4 } from "uuid"
 
 // START-OF handle task movment helper functions
@@ -70,7 +70,7 @@ function ListBoard({ params }: { params: { id: string } }) {
 	const { push } = useRouter()
 
 	const { documents, error } = useCollection<KiraDocument>({
-		collectionName: "tasks",
+		collectionName: process.env.NEXT_PUBLIC_COLLECTION,
 		_query: ["boardID", "==", id],
 		_user: user
 	})

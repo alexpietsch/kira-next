@@ -1,10 +1,9 @@
 import ConfirmModal from "./ConfirmModal"
-import "./TaskEdit.css"
+import styles from "./TaskEdit.module.css"
 import { timestamp } from "@/app/_firebase/config"
 import { useFirestore } from "@/app/_hooks/useFirestore"
 import { Card, Column, KiraDocument } from "@/types/KiraDocument"
 // icons
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import Button from "@mui/material/Button"
 // MUI components
 //Dialog
@@ -17,14 +16,15 @@ import TextField from "@mui/material/TextField"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
+import { clsx } from "clsx"
 import de from "date-fns/locale/de"
 import React, { useState } from "react"
 import { GithubPicker } from "react-color"
 import { v4 as uuidv4 } from "uuid"
 
 interface ITaskEditProps {
-	sourceCard: Card
-	sourceColumn: Column
+	sourceCard: Card | null | undefined
+	sourceColumn: Column | null | undefined
 	boardData: KiraDocument
 	setBoardData: React.Dispatch<React.SetStateAction<KiraDocument>>
 	isTaskEditModalOpen: boolean
@@ -43,12 +43,12 @@ export default function TaskEdit({
 	const [showConfirmModal, setShowConfirmModal] = useState(false)
 	const [isEdit, setIsEdit] = useState({ state: true, text: "Edit" })
 
-	const [cardName, setCardName] = useState(sourceCard.cardName)
-	const [cardWorker, setCardWorker] = useState(sourceCard.cardWorker)
-	const [deadline, setDeadline] = useState(sourceCard.cardDeadline ? sourceCard.cardDeadline.toDate() : null)
+	const [cardName, setCardName] = useState(sourceCard?.cardName)
+	const [cardWorker, setCardWorker] = useState(sourceCard?.cardWorker)
+	const [deadline, setDeadline] = useState(sourceCard?.cardDeadline ? sourceCard.cardDeadline.toDate() : null)
 
-	const [cardDescription, setCardDescription] = useState(sourceCard.cardDescription)
-	const [cardLabels, setCardLabels] = useState(sourceCard.cardLabels)
+	const [cardDescription, setCardDescription] = useState(sourceCard?.cardDescription)
+	const [cardLabels, setCardLabels] = useState(sourceCard?.cardLabels)
 
 	const [newCardLabelName, setNewCardLabelName] = useState("")
 	const [newCardLabelNameColor, setNewCardLabelNameColor] = useState("#fff")
@@ -63,23 +63,23 @@ export default function TaskEdit({
 		} else {
 			let newBoardData = boardData
 			// get column from boardData.columns
-			let newBoardDataColumn = newBoardData.columns.find(col => col.columnID === sourceColumn.columnID)!
+			let newBoardDataColumn = newBoardData.columns.find(col => col.columnID === sourceColumn?.columnID)!
 			// get card from column.cards
-			let newBoardDataColumnCard = newBoardDataColumn.cards.find(card => card.cardID === sourceCard.cardID)!
+			let newBoardDataColumnCard = newBoardDataColumn.cards.find(card => card.cardID === sourceCard?.cardID)!
 
 			// update card
 			newBoardDataColumnCard = {
 				...newBoardDataColumnCard,
-				cardName,
-				cardWorker,
+				cardName: cardName || "",
+				cardWorker: cardWorker || "",
 				cardDeadline: deadline ? timestamp.fromDate(new Date(deadline)) : null,
-				cardDescription,
-				cardLabels
+				cardDescription: cardName || "",
+				cardLabels: cardLabels || []
 			}
 
 			// insert card to same position in column
 			newBoardDataColumn.cards = newBoardDataColumn.cards.map(card => {
-				if (card.cardID === sourceCard.cardID) {
+				if (card.cardID === sourceCard?.cardID) {
 					return newBoardDataColumnCard
 				} else {
 					return card
@@ -88,7 +88,7 @@ export default function TaskEdit({
 
 			// insert column to same position in boardData
 			newBoardData.columns = newBoardData.columns.map(col => {
-				if (col.columnID === sourceColumn.columnID) {
+				if (col.columnID === sourceColumn?.columnID) {
 					return newBoardDataColumn
 				} else {
 					return col
@@ -113,8 +113,8 @@ export default function TaskEdit({
 		const labelColor = newCardLabelColor.trim()
 		const labelTextColor = newCardLabelNameColor.trim()
 
-		if (labelName && cardLabels.filter(label => label.labelName === labelName).length === 0) {
-			setCardLabels(prevLabels => [...prevLabels, { labelID: uuidv4(), labelName, labelColor, labelTextColor }])
+		if (labelName && cardLabels !== undefined && cardLabels?.filter(label => label.labelName === labelName).length === 0) {
+			setCardLabels(prevLabels => [...prevLabels!, { labelID: uuidv4(), labelName, labelColor, labelTextColor }])
 		}
 		setNewCardLabelName("")
 		setNewCardLabelColor("#b80000")
@@ -122,7 +122,7 @@ export default function TaskEdit({
 		setShowLabelCreator(false)
 	}
 	function handleDeleteLabel(labelID: string) {
-		setCardLabels(cardLabels => cardLabels.filter(label => label.labelID !== labelID))
+		setCardLabels(cardLabels => cardLabels?.filter(label => label.labelID !== labelID))
 	}
 	function handleCloseModal() {
 		if (!isEdit.state) {
@@ -160,7 +160,7 @@ export default function TaskEdit({
 						<Stack spacing={1.5}>
 							<label>
 								<TextField
-									className="formInput"
+									className={styles.formInput}
 									required
 									label="Taskname"
 									onChange={e => setCardName(e.target.value)}
@@ -174,7 +174,7 @@ export default function TaskEdit({
 
 							<label>
 								<TextField
-									className="formInput"
+									className={styles.formInput}
 									label="Worker"
 									onChange={e => setCardWorker(e.target.value)}
 									value={cardWorker}
@@ -198,7 +198,7 @@ export default function TaskEdit({
 							</label>
 							<label>
 								<TextField
-									className="formInput"
+									className={styles.formInput}
 									label="Description"
 									multiline
 									rows={4}
@@ -219,7 +219,7 @@ export default function TaskEdit({
 										<DialogContent style={{ paddingTop: "10px" }}>
 											<div>
 												<TextField
-													className="formInput"
+													className={styles.formInput}
 													required
 													label="Label Name"
 													onChange={e => setNewCardLabelName(e.target.value)}
@@ -228,7 +228,7 @@ export default function TaskEdit({
 													size="small"
 												/>
 												<p
-													className="label"
+													className={styles.label}
 													style={{
 														backgroundColor: newCardLabelColor,
 														color: newCardLabelNameColor
@@ -237,7 +237,7 @@ export default function TaskEdit({
 													{newCardLabelName === "" ? "Label Name" : newCardLabelName}
 												</p>
 												<GithubPicker
-													className="colorPicker"
+													className={styles.colorPicker}
 													color={newCardLabelColor}
 													// triangle="top-left"
 													onChangeComplete={color => {
@@ -256,10 +256,12 @@ export default function TaskEdit({
 									</Dialog>
 								)}
 							</label>
-							<p className="labelWrapper">
-								{cardLabels.map(label => (
+							<p className={styles.labelWrapper}>
+								{cardLabels?.map(label => (
 									<span
-										className={`label ${!isEdit.state ? "label-delete" : ""}`}
+										className={clsx(styles.label, {
+											[styles.labelDelete]: !isEdit.state
+										})}
 										key={label.labelID}
 										style={{
 											backgroundColor: label.labelColor,
@@ -281,7 +283,7 @@ export default function TaskEdit({
 									</span>
 								))}
 								<button
-									className="addLabel"
+									className={styles.addLabel}
 									onClick={e => {
 										e.preventDefault()
 										setShowLabelCreator(true)
