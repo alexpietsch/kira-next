@@ -26,15 +26,21 @@ function UserProfile() {
 		}
 		setIsSnackBarOpen(false)
 	}
-	const SnackbarAlert = React.forwardRef(function Alert(props: AlertProps) {
-		return <MuiAlert elevation={6} variant="filled" {...props} />
+
+	const Action = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+		return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 	})
 
 	return (
 		<>
 			<EditUserProfile open={isEditProfileOpen} onClose={setIsEditProfileOpen} setIsSnackBarOpen={setIsSnackBarOpen} />
-			<Snackbar open={isSnackBarOpen} autoHideDuration={6000} onClose={handleClose}>
-				<SnackbarAlert>Successfully updated profile image!</SnackbarAlert>
+			<Snackbar
+				open={isSnackBarOpen}
+				autoHideDuration={5000}
+				onClose={handleClose}
+				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+			>
+				<Action severity="success">Successfully updated profile image</Action>
 			</Snackbar>
 
 			<Box sx={{ flexGrow: 1, mt: "50px", p: "20px" }}>
@@ -52,6 +58,7 @@ function UserProfile() {
 								style={{ width: "200px", height: "auto" }}
 								src={user.photoURL ? user.photoURL : GenericUserAvatar}
 								alt="User profile avatar"
+								priority
 								unoptimized
 							/>
 						</Box>

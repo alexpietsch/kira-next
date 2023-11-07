@@ -43,12 +43,12 @@ export default function EditUserProfile({ open, onClose, setIsSnackBarOpen }: IE
 	const handleSubmitProfilePicture = async () => {
 		if (!profileImage) return
 		const uploadPath = `${user?.uid}/profilePicture/${profileImage.name}`
-		let imgUrl
+		let imgUrl = null
 		try {
 			let imgRef = ref(projectStorage, uploadPath)
-			uploadBytes(imgRef, profileImage).then(snapshot => {
-				getDownloadURL(snapshot.ref).then(url => (imgUrl = url))
-			})
+			const uploadResult = await uploadBytes(imgRef, profileImage)
+			const url = await getDownloadURL(uploadResult.ref)
+			imgUrl = url
 		} catch (error) {
 			console.error(error)
 			return
