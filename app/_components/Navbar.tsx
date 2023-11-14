@@ -8,7 +8,8 @@ import styles from "./Navbar.module.css"
 // icons & images
 import Logo from "@/public/assets/logo.svg"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
-import LogoutIcon from "@mui/icons-material/Logout"
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined"
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
 // material ui
 import { IconButton, Button, Avatar, Menu, MenuItem, ListItemIcon } from "@mui/material"
 // next & react
@@ -120,12 +121,19 @@ export default function Navbar() {
 										src={user.photoURL ? user.photoURL : "/assets/avatar.png"}
 									/>
 								</ListItemIcon>
-								Your Profile
+								Profile
+							</MenuItem>
+
+							<MenuItem onClick={() => push("/settings")}>
+								<ListItemIcon>
+									<SettingsOutlinedIcon />
+								</ListItemIcon>
+								Settings
 							</MenuItem>
 
 							<MenuItem onClick={logout}>
 								<ListItemIcon>
-									<LogoutIcon />
+									<LogoutOutlinedIcon />
 								</ListItemIcon>
 								Logout
 							</MenuItem>

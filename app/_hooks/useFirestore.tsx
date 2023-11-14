@@ -1,6 +1,6 @@
 import { projectFirestore } from "@/app/_firebase/config"
 import { BoardMember, Column } from "@/types/KiraDocument"
-import { addDoc, collection, deleteDoc, doc, setDoc, updateDoc } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
 import { useEffect, useReducer, useState } from "react"
 
 let initialState = {
@@ -15,36 +15,28 @@ type Action = {
 	payload?: any
 }
 
-type UpdateDocumentData = {
-	boardID?: string
-	boardName?: string
-	boardDescription?: string
-	boardMember?: Array<BoardMember>
-	columns?: Array<Column>
-	user?: string
-}
-
 const firestoreReducer = (state: any, action: Action) => {
 	switch (action.type) {
 		case "IS_PENDING":
-			return { isPending: true, document: null, success: false, error: null }
+			return { ...state, isPending: true, document: null, success: false, error: null }
 		case "NEW_DOCUMENT_ADDED":
-			return { isPending: false, document: action.payload, success: true, error: null }
+			return { ...state, isPending: false, document: action.payload, success: true, error: null }
 		case "CHANGE_DOCUMENT":
-			return { isPending: false, document: action.payload, success: true, error: null }
+			return { ...state, isPending: false, document: action.payload, success: true, error: null }
 		case "UPDATE_DOCUMENT":
-			return { isPending: false, document: action.payload, success: true, error: null }
+			return { ...state, isPending: false, document: action.payload, success: true, error: null }
 		case "DELETED_DOCUMENT":
-			return { isPending: false, document: null, success: true, error: null }
+			return { ...state, isPending: false, document: null, success: true, error: null }
 		case "ERROR":
-			return { isPending: false, document: null, success: false, error: action.payload }
+			console.error("Error when fetching.", action.payload)
+			return { ...state, isPending: false, document: null, success: false, error: action.payload }
 		default:
 			return state
 	}
 }
 
 export const useFirestore = (collectionName: string) => {
-	const [response, dispatch] = useReducer(firestoreReducer, initialState)
+	const [state, dispatch] = useReducer(firestoreReducer, initialState)
 	const [isCancelled, setIsCancelled] = useState(false)
 
 	// collection reference
@@ -91,7 +83,7 @@ export const useFirestore = (collectionName: string) => {
 		}
 	}
 
-	const updateDocument = async (id: string, dataObject: UpdateDocumentData) => {
+	const updateDocument = async (id: string, dataObject: any) => {
 		dispatch({ type: "IS_PENDING" })
 
 		try {
@@ -118,5 +110,12 @@ export const useFirestore = (collectionName: string) => {
 		return () => setIsCancelled(true)
 	}, [])
 
-	return { addDocument, addDocumentCustomId, deleteDocument, response, changeDocument, updateDocument }
+	return {
+		addDocument,
+		addDocumentCustomId,
+		deleteDocument,
+		response: state,
+		changeDocument,
+		updateDocument
+	}
 }

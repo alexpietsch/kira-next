@@ -2,7 +2,7 @@
 
 // hooks
 // styles
-import "./ListBoard.css"
+import "./board.css"
 import BoardEdit from "@/app/_components/BoardEdit"
 import ColumnEdit from "@/app/_components/ColumnEdit"
 import ConfirmModal from "@/app/_components/ConfirmModal"
@@ -13,7 +13,9 @@ import withAuth from "@/app/_components/WithAuth"
 import { useAuthContext } from "@/app/_hooks/useAuthContext"
 import { useCollection } from "@/app/_hooks/useCollection"
 import { useFirestore } from "@/app/_hooks/useFirestore"
+import getDocumentById from "@/app/utils/getDocumentById"
 import { Card, Column, KiraDocument } from "@/types/KiraDocument"
+import { Settings } from "@/types/Settings"
 // packages
 import { DragDropContext, Droppable, Draggable, DraggableLocation, DropResult } from "@hello-pangea/dnd"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
@@ -77,6 +79,7 @@ function ListBoard({ params }: { params: { id: string } }) {
 	const { updateDocument } = useFirestore("tasks")
 
 	const [boardData, setBoardData] = useState<any>()
+	const [settings, setSettings] = useState<Settings>()
 
 	const [isEditColumnOpen, setIsEditColumnOpen] = useState(false)
 	const [isColumnAddOpen, setIsColumnAddOpen] = useState(false)
@@ -104,6 +107,11 @@ function ListBoard({ params }: { params: { id: string } }) {
 			setBoardData(data)
 		}
 	}, [data])
+	useEffect(() => {
+		getDocumentById("users", user?.uid).then(data => {
+			setSettings(data?.settings)
+		})
+	}, [user])
 
 	function handleOnDragEnd(result: DropResult) {
 		if (!boardData) return
@@ -279,7 +287,10 @@ function ListBoard({ params }: { params: { id: string } }) {
 									boardData.columns.map((column: Column) => (
 										<div key={column.columnID} className="taskColumn">
 											<h2>
-												{column.columnName} ({column.cards.length})
+												{column.columnName}{" "}
+												{settings && settings.showColumnCount
+													? `(${column.cards.length})`
+													: ""}
 												<IconButton
 													onClick={() => {
 														setIsEditColumnOpen(true)
@@ -337,17 +348,27 @@ function ListBoard({ params }: { params: { id: string } }) {
 																								: "taskCard"
 																						}
 																						onDoubleClick={() => {
-																							setIsTaskEditModalOpen(true)
-																							setModalActiveCard(card)
-																							setModalActiveColumn(column)
+																							setIsTaskEditModalOpen(
+																								true
+																							)
+																							setModalActiveCard(
+																								card
+																							)
+																							setModalActiveColumn(
+																								column
+																							)
 																						}}
 																					>
 																						<p>{card.cardName}</p>
 																						<span
 																							className="deleteButton"
 																							onClick={() => {
-																								setModalActiveColumn(column)
-																								setModalActiveCard(card)
+																								setModalActiveColumn(
+																									column
+																								)
+																								setModalActiveCard(
+																									card
+																								)
 																								setShowCardDeleteConfirmModal(
 																									true
 																								)
@@ -356,21 +377,27 @@ function ListBoard({ params }: { params: { id: string } }) {
 																							<DeleteOutlineIcon />
 																						</span>
 																						<div className="labelWrapper">
-																							{card.cardLabels.map(label => {
-																								return (
-																									<span
-																										key={label.labelID}
-																										className="label"
-																										style={{
-																											backgroundColor:
-																												label.labelColor,
-																											color: label.labelTextColor
-																										}}
-																									>
-																										{label.labelName}
-																									</span>
-																								)
-																							})}
+																							{card.cardLabels.map(
+																								label => {
+																									return (
+																										<span
+																											key={
+																												label.labelID
+																											}
+																											className="label"
+																											style={{
+																												backgroundColor:
+																													label.labelColor,
+																												color: label.labelTextColor
+																											}}
+																										>
+																											{
+																												label.labelName
+																											}
+																										</span>
+																									)
+																								}
+																							)}
 																						</div>
 																					</li>
 																				)}
@@ -415,7 +442,9 @@ function ListBoard({ params }: { params: { id: string } }) {
 												{showError && (
 													<>
 														<br />
-														<span style={{ color: "red" }}>Column Name can&apos;t be empty</span>
+														<span style={{ color: "red" }}>
+															Column Name can&apos;t be empty
+														</span>
 													</>
 												)}
 												<TextField

@@ -33,7 +33,7 @@ export const useSignup = () => {
 				photoURL: null
 			})
 
-			// update Context do be current user
+			// update Context to be current user
 			dispatch({ type: "LOGIN", payload: response.user })
 
 			if (!isCancelled) {

@@ -1,3 +1,4 @@
+import { openSnackbar } from "./SeveritySnackbar"
 import { projectStorage } from "@/app/_firebase/config"
 import { useAuthContext } from "@/app/_hooks/useAuthContext"
 import { TextField, DialogTitle, Dialog, DialogActions, Button } from "@mui/material"
@@ -8,10 +9,9 @@ import React, { Dispatch, SetStateAction, useState } from "react"
 interface IEditUserProfileProps {
 	open: boolean
 	onClose: Dispatch<SetStateAction<any>>
-	setIsSnackBarOpen: Dispatch<SetStateAction<any>>
 }
 
-export default function EditUserProfile({ open, onClose, setIsSnackBarOpen }: IEditUserProfileProps) {
+export default function EditUserProfile({ open, onClose }: IEditUserProfileProps) {
 	const { state } = useAuthContext()
 	const user = state.user!
 
@@ -42,7 +42,8 @@ export default function EditUserProfile({ open, onClose, setIsSnackBarOpen }: IE
 
 	const handleSubmitProfilePicture = async () => {
 		if (!profileImage) return
-		const uploadPath = `${user?.uid}/profilePicture/${profileImage.name}`
+		const imageExtension = profileImage.name.split(".").pop()
+		const uploadPath = `${user?.uid}/profilePicture/profilePicture.${imageExtension}`
 		let imgUrl = null
 		try {
 			let imgRef = ref(projectStorage, uploadPath)
@@ -57,7 +58,7 @@ export default function EditUserProfile({ open, onClose, setIsSnackBarOpen }: IE
 		if (imgUrl && user) {
 			await updateProfile(user, { photoURL: imgUrl })
 			onClose(false)
-			setIsSnackBarOpen(true)
+			openSnackbar({ severity: "success", message: "Profile updated successfully!" })
 		}
 	}
 	return (

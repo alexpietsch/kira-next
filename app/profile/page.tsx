@@ -18,30 +18,10 @@ function UserProfile() {
 	const user = state.user!
 
 	const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
-	const [isSnackBarOpen, setIsSnackBarOpen] = useState(false)
-
-	const handleClose = (event: any, reason: string) => {
-		if (reason === "clickaway") {
-			return
-		}
-		setIsSnackBarOpen(false)
-	}
-
-	const Action = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
-		return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-	})
 
 	return (
 		<>
-			<EditUserProfile open={isEditProfileOpen} onClose={setIsEditProfileOpen} setIsSnackBarOpen={setIsSnackBarOpen} />
-			<Snackbar
-				open={isSnackBarOpen}
-				autoHideDuration={5000}
-				onClose={handleClose}
-				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-			>
-				<Action severity="success">Successfully updated profile image</Action>
-			</Snackbar>
+			<EditUserProfile open={isEditProfileOpen} onClose={setIsEditProfileOpen} />
 
 			<Box sx={{ flexGrow: 1, mt: "50px", p: "20px" }}>
 				<Grid container spacing={5}>

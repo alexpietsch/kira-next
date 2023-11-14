@@ -2,7 +2,7 @@ import LoadingSpinnerSVG from "@/public/assets/loading.svg"
 import Image from "next/image"
 
 interface ILoadingSpinnerProps {
-	isFullpage: boolean
+	isFullpage?: boolean
 	size?: "small" | "medium" | "large"
 }
 
@@ -23,13 +23,23 @@ const LoadingSpinner = ({ isFullpage, size }: ILoadingSpinnerProps) => {
 	if (isFullpage) {
 		return (
 			<div className="loading-spinner">
-				<Image priority={true} src={LoadingSpinnerSVG} alt="Picture of a loading symbol" height={spinnerSize(size)} />
+				<Image
+					priority={true}
+					src={LoadingSpinnerSVG}
+					alt="Picture of a loading symbol"
+					height={spinnerSize(size)}
+				/>
 			</div>
 		)
 	}
 	return (
 		<div>
-			<Image priority={true} src={LoadingSpinnerSVG} alt="Picture of a loading symbol" height={spinnerSize(size)} />
+			<Image
+				priority={true}
+				src={LoadingSpinnerSVG}
+				alt="Picture of a loading symbol"
+				height={spinnerSize(size)}
+			/>
 		</div>
 	)
 }
